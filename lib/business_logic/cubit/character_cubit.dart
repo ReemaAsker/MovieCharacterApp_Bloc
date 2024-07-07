@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_characters/data/model/character.dart';
+import 'package:movie_characters/data/model/quote.dart';
 import 'package:movie_characters/data/repository/character_repo.dart';
 
 part 'character_state.dart';
@@ -23,6 +24,16 @@ class CharacterCubit extends Cubit<CharactersState> {
       this.characters = characters;
 
       return characters; // Return the fetched characters
+    } catch (e) {
+      throw Exception('Failed to fetch characters: $e');
+    }
+  }
+
+  void getQoutesList() async {
+    try {
+      List<Quote> qoutes = await characterRepo.fectchqoutes();
+      print('###############');
+      emit(QoutesLoaded(qoutes));
     } catch (e) {
       throw Exception('Failed to fetch characters: $e');
     }
